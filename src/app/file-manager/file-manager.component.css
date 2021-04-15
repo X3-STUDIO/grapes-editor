@@ -1,0 +1,58 @@
+/**************************/
+/******* File Modal *******/
+/**************************/
+.list-group-item {
+    width: 10%;
+}
+
+
+.modal-dialog {
+    max-width: 100%;
+    margin: 2.0rem;
+}
+
+li:not(.active) span {
+    text-decoration: underline;
+}
+
+li:not(.active) span:hover {
+    color: #555555;
+    cursor: pointer;
+}
+
+.file-system-list img,
+.table img {
+    width: 4rem;
+    height: 4rem;
+}
+
+.file-system-list span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table td,
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.file-system-list .folder-icon-container,
+.file-system-list .file-image-container,
+.file-system-list {
+    text-align: center;
+}
+
+.file-insert button {
+    float: right;
+}
+
+.list-group-horizontal {
+    cursor: pointer;
+}
+
+.file-system-list {
+    max-height: 15.0rem;
+    overflow: scroll;
+}

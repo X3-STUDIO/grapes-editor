@@ -1,1 +1,148 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+img.gjs-selected, .gjs-plh-image {
+  outline: 3px solid  rgb(55, 135, 189) !important;
+}
+
+
+/* Grapesjs colors appereance */
+.gjs-four-color {
+  color: rgb(55, 135, 189) !important;
+}
+.gjs-four-color-h:hover {
+  color: rgb(55, 135, 189) !important;
+}
+.gjs-color-warn {
+  color: rgb(55, 135, 189) !important;
+  fill: rgb(55, 135, 189) !important;
+}
+.gjs-one-bg {
+  background-color: rgb(230, 230, 230) !important;
+}
+.gjs-two-color {
+  color: #555555 !important;
+}
+
+/* Panel buttons' style */
+.gjs-pn-btn {
+  line-height: 30px;
+}
+.gjs-pn-buttons {
+  justify-content: flex-end !important;
+}
+
+/* Snackbar on saving */
+snack-bar-container.green {
+  color: green;
+}
+snack-bar-container.red {
+  color: red;
+}
+.mat-simple-snackbar {
+  justify-content: center !important;
+}
+
+/* hide the layers manager button in the View Panel */
+.fa-bars {
+  display: none;
+}
+
+/* hide the class section in style manager */
+.gjs-clm-tags {
+  display: none;
+}
+
+.assets-panel mat-dialog-container {
+  background-color: white;
+  color: #212529;
+}
+
+.assets-panel mat-dialog-container {
+  background-color: white;
+  color: #212529;
+}
+
+#grapes-editor-container {
+  padding: 0;
+}
+
+body.gjs-dashed {
+  padding: 4px !important;
+}
+
+mat-dialog-container {
+  padding: 0 !important;
+}
+
+.modal-dialog {
+  margin: 0 !important;
+}
+
+button.close {
+  font-size: 1.6rem !important;
+}
+
+.order1 {
+  order: 1;
+}
+.order2 {
+  order: 2;
+}
+.order3 {
+  order: 3;
+}
+.order4 {
+  order: 4;
+}
+.order5 {
+  order: 5;
+}
+.order6 {
+  order: 6;
+}
+.order7 {
+  order: 7;
+}
+.order8 {
+  order: 8;
+}
+.order9 {
+  order: 9;
+}
+.order10 {
+  order: 10;
+}
+.order11 {
+  order: 11;
+}
+.order12 {
+  order: 12;
+}
+.order13 {
+  order: 13;
+}
+.order14 {
+  order: 14;
+}
+
+.button-fake {
+    display:inline-block !important;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+.button-fake:active {
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}

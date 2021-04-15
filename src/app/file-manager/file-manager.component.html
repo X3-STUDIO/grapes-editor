@@ -1,0 +1,122 @@
+<!-- <h2 mat-dialog-title>{{description}}</h2> -->
+<!-- <mat-dialog-content> -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Inserisci immagini</h4>
+            <button type="button" class="btn btn-close" [mat-dialog-close]="data.url" data-dismiss="modal"
+                (click)="close()"></button>
+        </div>
+        <div class="modal-body container-fluid">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <form id="upload_form" enctype="multipart/form-data" method="post" name="uploadForm"
+                        (submit)="sendMultipleFiles()">
+                        <label for="file">Scegli i file da caricare:</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" placeholder="Carica File" aria-label="Carica File"
+                                aria-describedby="uploadBtn" #inputFile id="file1" name="file1" multiple>
+                            <!-- (change)="onFileChange($event)" multiple -->
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" id="uploadBtn">Carica</button>
+                            </div> <!-- [disabled]="!theFile" -->
+                        </div>
+                        <div *ngIf="progressValue!=0 && progressValue!=100" class="progress">
+                            <div id="progressBar2" class="progress-bar" role="progressbar" aria-valuenow="50"
+                                [ngStyle]="{'width': progressValue+'%'}" aria-valuemin="0" aria-valuemax="100">
+                                caricamento {{loading}}/{{toLoad}}
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <h3 id="status">{{ status }}</h3>
+                    <p id="loaded_n_total">{{ uploadStatus }}</p> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li *ngFor="let folder of folderPath; index as i; last as isLast" class="breadcrumb-item"
+                                [ngClass]="{'active': isLast, 'enabled': !isLast}" aria-current="page"
+                                (click)="findContent(folder, i)"><span>{{folder}}</span>
+                            </li>
+                        </ol>
+                    </nav>
+                    <div class="input-group mb-3 col-sm-6 col-md-4">
+                        <input #newFolder type="text" class="form-control" placeholder="Nuova cartella"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                (click)="createFolder(newFolder.value)">Crea</button>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="list-group list-group-flush list-group-horizontal file-system-list row">
+                            <a *ngFor="let element of content; index as i"
+                                class="list-group-item list-group-item-action col-lg-1 col-md-2 col-6 border-0 p-1">
+                                <!-- (click)="findContent('/'+element.name)" -->
+                                <div *ngIf="element.type=='directory'" class="folder-icon-container"
+                                    (click)="findContent(element.name)">
+                                    <svg width="4rem" height="4rem" viewBox="0 0 16 16" class="bi bi-folder-fill"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+                                    </svg>
+                                    <span class="d-block">{{element.name}}</span>
+                                </div>
+                                <div *ngIf="element.type=='file' && !isDangerousFile(element.name)"
+                                    class="file-image-container" (click)="findFileInfo(element.name)">
+                                    <img *ngIf="isImage(element.name)"
+                                        src="{{mainDirectoryUrl}}{{position}}/{{element.name}}" class="img-fluid">
+                                    <img *ngIf="!isImage(element.name)"
+                                        src="assets/icons/{{getExtensionIconImage(element.name)}}" class="img-fluid">
+                                    <span class="d-block">{{element.name}}</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="infoFile.name!=''" class="row">
+                <table class="table col-12 mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">File</th>
+                            <th scope="col">Nome</th>
+                            <th *ngIf="!canInsert">Link a</th>
+                            <th scope="col">Data Creazione</th>
+                            <th scope="col">Dimensione</th>  <!-- class="d-none d-md-block" -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img *ngIf="isImage(infoFile.name)"
+                                    src="{{mainDirectoryUrl}}{{infoPosition}}/{{infoFile.name}}" class="img-fluid">
+                                <img *ngIf="!isImage(infoFile.name)"
+                                    src="assets/icons/{{getExtensionIconImage(infoFile.name)}}" class="img-fluid">
+                            </td>
+                            <td>{{infoFile.formatName}}</td>
+                            <td *ngIf="!canInsert" >
+                                <button type="button" class="btn btn-outline-secondary" [cdkCopyToClipboard]="URL + '/public' + infoPosition + '/' + infoFile.formatName" (click)=copyUrl()>Copia</button>
+                            </td>
+                            <td>{{infoFile.date}}</td>
+                            <td>{{infoFile.dimension}} KB</td>  <!-- class="d-none d-md-block" -->
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="file-insert col-12">
+                    <button type="button" class="btn btn-danger m-2">Elimina</button>
+                    <button *ngIf="canInsert" class="btn btn-primary m-2" data-dismiss="modal" (click)="insertImage()">Inserisci</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </mat-dialog-content> -->
+<!-- <mat-dialog-actions>
+    <button class=" mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary" (click)="insertImage()">Save</button>
+</mat-dialog-actions> -->
+
+<!-- <div id="fileModal" class="modal" #modal> -->
+<!-- </div> -->
